@@ -23,13 +23,6 @@
 
 void coolant_init()
 {
-#ifdef AVRTARGET
-  COOLANT_FLOOD_DDR |= (1 << COOLANT_FLOOD_BIT); // Configure as output pin
-  #ifdef ENABLE_M7
-    COOLANT_MIST_DDR |= (1 << COOLANT_MIST_BIT);
-  #endif
-#endif
-#ifdef STM32F103C8
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_COOLANT_FLOOD_PORT, ENABLE);
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -42,7 +35,7 @@ void coolant_init()
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Pin = 1 << COOLANT_MIST_BIT;
 	GPIO_Init(COOLANT_MIST_PORT, &GPIO_InitStructure);
-#endif
+
   coolant_stop();
 }
 
